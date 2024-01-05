@@ -33,7 +33,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - gitea: update to v1.21.3 [[1]](https://github.com/go-gitea/gitea/releases/tag/v1.21.2) [[2]](https://github.com/go-gitea/gitea/releases/tag/v1.21.3)
 - postgresql: explicitely install postgresql version 15
 - openldap: update ldap-account-manager to [v8.6](https://github.com/LDAPAccountManager/lam/releases/tag/8.6)
-- matrix: update element-web to v1.11.52 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.51) [[2]](https://github.com/vector-im/element-web/releases/tag/v1.11.52)
+- matrix: update element-web to v1.11.52 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.51) [[2]](https://github.com/vector-im/element-web/releases/tag/v1.11.52) [[3]](https://github.com/vector-im/element-web/releases/tag/v1.11.53)
 - xsrv: update ansible to [v9.0.1](https://github.com/ansible-community/ansible-build-data/blob/main/9/CHANGELOG-v9.rst)
 
 **Fixed:**
