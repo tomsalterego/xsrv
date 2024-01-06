@@ -33,6 +33,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 **Added:**
 - add [`nmap`](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/nmap) command and role - run nmap network scanner against hosts from the inventory
+- wireguard: when no [`public_key`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/wireguard/defaults/main.yml) is defined for a peer, generate a public/priavte key pair for this peer automatically
 
 **Changed:**
 - graylog: support initial deployment of the role with graylog/mongodb/elasticsearch disabled
@@ -41,6 +42,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - matrix: update element-web to v1.11.57 [[1]](https://github.com/vector-im/element-web/releases/tag/v1.11.56) [[2]](https://github.com/vector-im/element-web/releases/tag/v1.11.57)
 - xsrv: update ansible to [v9.2.0](https://github.com/ansible-community/ansible-build-data/blob/main/9/CHANGELOG-v9.rst)
 - update documentation
+
+**Fixed:**
+- wireguard: actually remove peers from the config file and delete their keys when [`wireguard_peers.*.state: absent`](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/wireguard/defaults/main.yml)
 
 [Full changes since v1.21.0](https://gitlab.com/nodiscc/xsrv/-/compare/1.21.0...1.22.0)
 

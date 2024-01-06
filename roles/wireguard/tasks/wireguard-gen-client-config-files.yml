@@ -1,0 +1,17 @@
+- name: read client private key from file
+  slurp:
+    src: "/etc/wireguard/peers/private/{{ item.name }}.key"
+  register: wireguard_peer_private_key
+  ignore_errors: "{{ ansible_check_mode }}"
+  when: ((item.state is not defined) or (item.state == "present")) and (item.public_key is not defined)
+
+- name: generate client configuration file
+  template:
+    src: wireguard-client.conf.j2
+    dest: "/etc/wireguard/peers/{{ item.name }}.conf"
+    owner: root
+    group: root
+    mode: "0600"
+  diff: no # don't show diffs, files contain sensitive private key
+  ignore_errors: "{{ ansible_check_mode }}"
+  when: (item.state is not defined) or (item.state == "present")
