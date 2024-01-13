@@ -1,0 +1,32 @@
+- name: uninstall mumble server packages
+  apt:
+    state: absent
+    package:
+      - mumble-server
+
+- name: remove firewalld rules for mumble
+  ansible.posix.firewalld:
+    zone: "{{ item.zone }}"
+    service: mumble
+    state: disabled
+    permanent: yes
+    immediate: yes
+  with_items: "{{ mumble_firewalld_zones }}"
+
+- name: remove mumble server configuration
+  file:
+    state: absent
+    path: "{{ item }}"
+  with_items:
+    - /etc/rsnapshot.d/mumble-server.conf
+    - /etc/ansible/facts.d/mumble.fact
+    - /etc/fail2ban/jail.d/mumble.conf
+    - /etc/firewalld/services/mumble.xml
+    - /etc/mumble-server.ini
+    - /etc/rsyslog.d/mumble.conf
+  notify:
+    - update ansible facts
+    - reload fail2ban
+    - check rsnapshot configuration
+    - reload firewalld
+    - restart rsyslog

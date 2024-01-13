@@ -28,6 +28,8 @@ Podman can be used as a base component to deploy other/services and applications
 
 ### Uninstallation
 
+Use the `utils-podman-uninstall` ansible tag.
+
 ```bash
 TAGS=utils-podman-uninstall xsrv deploy
 ```
