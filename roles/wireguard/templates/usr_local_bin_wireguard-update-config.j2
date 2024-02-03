@@ -1,0 +1,33 @@
+#!/bin/bash
+# Description: generate wireguard wg0.conf
+set -o errexit
+set -o nounset
+
+wg0_conf_md5sum_before=0
+if [[ -f /etc/wireguard/wg0.conf ]]; then
+    wg0_conf_md5sum_before=$(md5sum /etc/wireguard/wg0.conf)
+fi
+
+echo "[Interface]
+Address = {{ wireguard_server_ip }}
+PrivateKey = {{ wireguard_server_private_key.content | b64decode }}
+ListenPort = 51820
+
+" > /etc/wireguard/wg0.conf.tmp
+
+{% for peer in wireguard_peers %}
+echo "[Peer]
+# Peer: {{ peer.name }}
+PublicKey = {{ peer.public_key | default('$('cat /etc/wireguard/peers/' + peer.name + '.pub')') }}
+AllowedIPs = {{ peer.ip_address }}
+
+" >> /etc/wireguard/wg0.conf.tmp
+{% endfor %}
+
+mv -f /etc/wireguard/wg0.conf.tmp /etc/wireguard/wg0.conf
+wg0_conf_md5sum_after=$(md5sum /etc/wireguard/wg0.conf)
+if [[ "$wg0_conf_md5sum_before" == "$wg0_conf_md5sum_after" ]]; then
+    echo "wg0.conf unchanged"
+else
+    echo "wg0.conf changed"
+fi

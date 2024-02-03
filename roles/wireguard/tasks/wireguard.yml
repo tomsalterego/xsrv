@@ -67,13 +67,19 @@
 
 ### CONFIGURATION ###
 
-- name: copy wireguard server configuration
+- name: copy wireguard server config generation script
   template:
-    src: etc_wireguard_wg0.conf.j2
-    dest: /etc/wireguard/wg0.conf
+    src: usr_local_bin_wireguard-update-config.j2
+    dest: /usr/local/bin/wireguard-update-config # TODO load config from file in /etc
     owner: root
     group: root
-    mode: "0600"
+    mode: "0700"
+
+- name: run wireguard server config generation script
+  command:
+    cmd: /usr/local/bin/wireguard-update-config
+  register: wireguard_config
+  changed_when: "wg0.conf changed" in wireguard_config.stdout
   ignore_errors: "{{ ansible_check_mode }}"
   notify: reload wireguard configuration
 
@@ -81,10 +87,6 @@
   meta: flush_handlers
 
 ### DOWNLOAD CLIENT CONFIGURATION FILES ###
-
-- name: build client configuration files
-  include_tasks: wireguard-gen-client-config-files.yml
-  loop: "{{ wireguard_peers }}"
 
 - name: create directory for client configuration files on the controller
   delegate_to: localhost
