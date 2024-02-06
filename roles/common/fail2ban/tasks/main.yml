@@ -1,0 +1,16 @@
+- name: include fail2ban configuration tasks
+  import_tasks: fail2ban.yml
+  become: yes
+  tags:
+    - common
+    - fail2ban
+  when: setup_fail2ban | bool
+
+##### UTILITIES ####
+# These tasks are tagged 'never' and will never run unless one of their tags is explicitly passed on the command line
+- name: include fail2ban status report tasks
+  import_tasks: utils-fail2ban-get-banned.yml
+  become: yes
+  tags:
+    - never
+    - utils-fail2ban-get-banned

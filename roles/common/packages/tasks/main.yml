@@ -1,0 +1,6 @@
+- name: include base package installation/removal tasks
+  import_tasks: packages.yml
+  become: yes
+  tags:
+    - common
+    - packages

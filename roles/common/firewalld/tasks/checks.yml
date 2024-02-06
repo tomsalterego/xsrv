@@ -1,0 +1,36 @@
+- name: check that mandatory variables are correctly defined
+  assert:
+    quiet: yes
+    that: "{{ item }}"
+    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/common/firewalld"
+  loop:
+    - setup_firewall == setup_firewall | bool
+    - firewalld|type_debug == "list"
+
+- name: check that variables are correctly defined (firewalld_zone_sources)
+  assert:
+    quiet: yes
+    that:
+      - item.zone is string
+      - item.sources|type_debug == "list"
+      - (item.state is not defined) or (item.state in ['enabled','disabled'])
+      - (item.permanent is not defined) or (item.permanent == item.permanent | bool)
+      - (item.immediate is not defined) or (item.immediate == item.permanent | bool)
+    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/common/firewalld"
+  when:
+    - setup_firewall | bool
+    - (item.delete is not defined) or (not item.delete)
+  loop: "{{ firewalld_zone_sources }}"
+
+- name: check that variables are correctly defined (firewalld_zone_services)
+  assert:
+    quiet: yes
+    that:
+      - item.zone is string
+      - item.services|type_debug == "list"
+      - (item.state is not defined) or (item.state in ['enabled','disabled'])
+      - (item.permanent is not defined) or (item.permanent == item.permanent | bool)
+      - (item.immediate is not defined) or (item.immediate == item.permanent | bool)
+    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/common/firewalld"
+  when: setup_firewall | bool
+  loop: "{{ firewalld_zone_services }}"

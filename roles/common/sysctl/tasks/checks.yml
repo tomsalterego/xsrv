@@ -1,0 +1,12 @@
+- name: check that mandatory variables are correctly defined
+  assert:
+    quiet: yes
+    that: "{{ item }}"
+    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/common/sysctl"
+  loop:
+    - kernel_enable_core_dump == kernel_enable_core_dump | bool
+    - setup_sysctl == setup_sysctl | bool
+    - sysctl_allow_forwarding == sysctl_allow_forwarding | bool
+    - sysctl_answer_ping == sysctl_answer_ping | bool
+    - sysctl_vm_swappiness|int
+    - sysctl_vm_vfs_cache_pressure|int

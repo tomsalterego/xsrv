@@ -1,0 +1,23 @@
+- name: check that mandatory variables are correctly defined
+  assert:
+    quiet: yes
+    that: "{{ item }}"
+    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/common/apt"
+  loop:
+    - setup_apt == setup_apt | bool
+    - apt_listbugs == apt_listbugs | bool
+    - apt_clean_days == apt_clean_days|int
+    - apt_unattended_upgrades_origins_patterns|type_debug == "list"
+    - apt_purge_nightly == apt_purge_nightly | bool
+
+- name: check that variables are correctly defined (apt-listbugs)
+  assert:
+    quiet: yes
+    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/common/apt"
+    that:
+      - apt_listbugs_action in ['force-no', 'force-yes', 'force-default']
+      - apt_listbugs_ignore_list|type_debug == "list"
+  when: apt_listbugs | bool
+  tags:
+    - apt
+    - apt-listbugs

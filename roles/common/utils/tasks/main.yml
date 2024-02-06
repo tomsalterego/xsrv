@@ -1,0 +1,29 @@
+##### UTILITIES ####
+# These tasks are tagged 'never' and will never run unless one of their tags is explicitly passed on the command line
+- name: include debian 10->11 migration tasks
+  import_tasks: utils-debian10to11.yml
+  become: yes
+  tags:
+    - never
+    - utils-debian10to11
+
+- name: include debian 11->12 migration tasks
+  import_tasks: utils-debian11to12.yml
+  become: yes
+  tags:
+    - never
+    - utils-debian11to12
+
+- name: include shutdown tasks
+  import_tasks: utils-shutdown.yml
+  become: yes
+  tags:
+    - never
+    - utils-shutdown
+
+- name: include reboot tasks
+  import_tasks: utils-reboot.yml
+  become: yes
+  tags:
+    - never
+    - utils-reboot

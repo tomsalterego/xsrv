@@ -1,0 +1,7 @@
+- name: include hostname configuration tasks
+  import_tasks: hostname.yml
+  become: yes
+  tags:
+    - common
+    - hostname
+  when: setup_hostname | bool

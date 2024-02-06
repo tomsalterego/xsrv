@@ -1,5 +1,3 @@
-# TODO move to sub-roles
-# TODO adapt help-tags parsing logic
 # @tag common - setup base system
 # @tag apt - setup APT package management
 # @tag checks - check that variables are correctly defined
@@ -47,10 +45,6 @@ galaxy_info:
     - memory
     - sysctl
     - apt
-    - cron
-    - users
-    - direwalld
-    - sysctl
     - debian
     - upgrades
     - pam
@@ -71,21 +65,5 @@ galaxy_info:
     - disa
     - stig
     - systemd
-# TODO reorder in same order as old/tasks/main.yml
 dependencies:
   - nodiscc.xsrv.handlers
-  - nodiscc.xsrv.common.apt
-  - nodiscc.xsrv.common.datetime
-  - nodiscc.xsrv.common.fail2ban
-  - nodiscc.xsrv.common.hostname
-  - nodiscc.xsrv.common.ssh
-  - nodiscc.xsrv.common.users
-  - nodiscc.xsrv.common.cron
-  - nodiscc.xsrv.common.dns
-  - nodiscc.xsrv.common.firewalld
-  - nodiscc.xsrv.common.hosts
-  - nodiscc.xsrv.common.msmtp
-  - nodiscc.xsrv.common.packages
-  - nodiscc.xsrv.common.sysctl
-  - nodiscc.xsrv.common.utils
-

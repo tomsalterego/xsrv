@@ -1,0 +1,21 @@
+##### SSH SERVER #####
+# setup/harden SSH server (yes/no)
+setup_ssh: yes
+# List of public SSH key files to authorize on the server for the ansible user
+# Example: ['data/public_keys/john.pub', 'data/public_keys/jane.pub']
+# Removing a key here does not remove it on the server!
+ssh_authorized_keys: []
+# a list of public keys that are never accepted by the ssh server
+ssh_server_revoked_keys: []
+# sshd and SFTP server log levels, respectively (QUIET, FATAL, ERROR, INFO, VERBOSE, DEBUG, DEBUG1, DEBUG2, DEBUG3)
+ssh_log_level: "VERBOSE"
+ssh_sftp_loglevel: "INFO"
+# allow clients to set locale/language-related environment variables (yes/no)
+ssh_accept_locale_env: no
+# types of SSH TCP forwarding to allow (no, local, remote, all - QUOTED)
+# remote/all is required to use the host as a jumpbox
+ssh_allow_tcp_forwarding: "no"
+# enable/disable root SSH logins (yes/no/prohibit-password/forced-commands-only - QUOTED)
+ssh_permit_root_login: "no"
+# enable/disable SSH password authentication (yes, no - QUOTED)
+ssh_password_authentication: "no"

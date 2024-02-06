@@ -1,0 +1,7 @@
+- name: include cron configuration tasks
+  import_tasks: cron.yml
+  become: yes
+  tags:
+    - common
+    - cron
+  when: setup_cron | bool

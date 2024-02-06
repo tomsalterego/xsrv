@@ -1,0 +1,8 @@
+- name: include date/time configuration tasks
+  import_tasks: datetime.yml
+  become: yes
+  tags:
+    - common
+    - datetime
+  when: setup_datetime | bool
+  

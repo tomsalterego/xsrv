@@ -1,0 +1,14 @@
+##### HOSTS FILE #####
+# update hosts file (yes/no)
+setup_hosts_file: yes
+# list of hosts to add/remove from the hosts file
+# Example:
+# hosts_file_entries:
+#   - ip_address: "10.0.0.1"
+#     hostname: "srv01.example.org"
+#     state: present # optional, absent/present, default present
+#   - ip_address: "10.0.0.2"
+#     hostname: "srv02.example.org mail.example.org"
+#   - ip_address: "1.2.3.4"
+#     state: absent
+hosts_file_entries: []

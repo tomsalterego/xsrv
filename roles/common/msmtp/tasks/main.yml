@@ -1,0 +1,7 @@
+- name: include system mail (msmtp) configuration tasks
+  import_tasks: mail.yml
+  become: yes
+  tags:
+    - common
+    - mail
+    - msmtp

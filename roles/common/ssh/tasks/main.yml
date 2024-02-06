@@ -1,0 +1,8 @@
+- name: include SSH server configuration tasks
+  import_tasks: ssh.yml
+  become: yes
+  tags:
+    - common
+    - ssh
+  when: setup_ssh | bool
+  

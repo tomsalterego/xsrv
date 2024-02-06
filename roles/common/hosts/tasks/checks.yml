@@ -1,0 +1,18 @@
+- name: check that mandatory variables are correctly defined
+  assert:
+    quiet: yes
+    that: "{{ item }}"
+    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/common/hosts"
+  loop:
+    - setup_hosts_file == setup_hosts_file | bool
+
+- name: check that variables are correctly defined (hosts)
+  assert:
+    quiet: yes
+    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/common/hosts"
+    that:
+      - item.ip_address | ansible.utils.ipaddr
+      - (item.state is not defined) or (item.state in ['present', 'absent'])
+  when: setup_hosts_file | bool
+  loop: "{{ hosts_file_entries }}"
+  tags: hosts

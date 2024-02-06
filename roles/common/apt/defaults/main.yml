@@ -1,0 +1,105 @@
+### PACKAGE MANAGEMENT ###
+# yes/no: setup APT sources (security, backports) and automatic security upgrades
+setup_apt: yes
+# yes/no: enable 'contrib' and 'non-free' software sections in debian APT repositories
+apt_enable_nonfree: no
+# clean downloaded package archives (apt clean) every n-days (0=disable)
+apt_clean_days: 7
+# yes/no: automatically remove (purge) configuration files of removed packages, nightly
+apt_purge_nightly: yes
+# automatic upgrades: allow unattended upgrades from the following sources (see 50unattended-upgrades.j2)
+# these settings have no effect if corresponding repositories are not enabled/configured
+apt_unattended_upgrades_origins_patterns:
+  - "origin=Debian,codename=${distro_codename},label=Debian" # Debian stable
+  - "origin=Debian,codename=${distro_codename}-updates" # Debian stable point release
+  - "origin=Debian,codename=${distro_codename}-proposed-updates" # Debian stable proposed updates
+  - "origin=Debian,codename=${distro_codename}-security,label=Debian-Security" # Debian security
+  - "origin=Debian Backports,codename=${distro_codename}-backports,label=Debian Backports" # Debian backports
+  - "origin=packagecloud.io/netdata/netdata,label=netdata" # nodiscc.xsrv.monitoring_netdata
+  - "origin=Jellyfin,site=repo.jellyfin.org" # nodiscc.xsrv.jellyfin
+  - "o=Freight,a=stable,site=packages.graylog2.org" # nodiscc.xsrv.graylog
+  - "o=mongodb,a=jammy,site=repo.mongodb.org" # nodiscc.xsrv.graylog
+  - "o=elastic,a=stable,site=artifacts.elastic.co" # nodiscc.xsrv.graylog
+  - "o=Prosody,a=stable,site=packages.prosody.im" # nodiscc.xsrv.jitsi
+  - "o=jitsi.org,a=stable,site=download.jitsi.org,label=Jitsi Debian packages repository" # nodiscc.xsrv.jitsi
+  - "o=matrix.org,site=packages.matrix.org" # nodiscc.xsrv.matrix
+  - "o=Proxmox,site=download.proxmox.com" # nodiscc.toolbox.proxmox
+  - "o=Docker,site=download.docker.com" # nodiscc.toolbox.docker
+
+# yes/no: setup apt-listbugs
+apt_listbugs: no
+# what to do when apt-listbugs finds a bug in a package about to be installed (force-no (default), force-yes/force-default)
+# force-no: abort the installation/upgrade as soon as bugs are found, unless bugs are listed in apt_listbugs_ignore_list
+# force-yes/force-default: accept to continue with the installation/upgrade even when bugs are found
+apt_listbugs_action: "force-no"
+# Debian bug numbers/packages to ignore for apt-listbugs (don't let these bugs block package installation)
+apt_listbugs_ignore_list:
+  - 909750 # https://bugs.debian.org/909750 - reason: FHS violation, not critical
+  - 933001 # https://bugs.debian.org/933001 - reason: plymouth is not installed
+  - 933749 # https://bugs.debian.org/933749 - reason: disk space not a problem on most hosts
+  - 935042 # https://bugs.debian.org/935042 - reason: skip-upgrade-test=yes set in monitoring role
+  - 967010 # https://bugs.debian.org/967010 - reason: not reproducible
+  - 935182 # https://bugs.debian.org/935182 - reason: only affects files on samba shares in specific setups
+  - 928963 # https://bugs.debian.org/928963 - reason: only affects sparc64, powerpc64, and s390x architectures
+  - 967010 # https://bugs.debian.org/967010 - reason: not reproducible
+  - 918012 # https://bugs.debian.org/918012 - reason: only affects debian 9
+  - 969072 # https://bugs.debian.org/969072 - reason: only happens during groff build, not when running the command
+  - 987570 # https://bugs.debian.org/987570 - reason: packaging bug, no impact
+  - 922981 # https://bugs.debian.org/922981 - reason: impact limited to new certificates, patch pending upload
+  - 929685 # https://bugs.debian.org/929685 - packaging bug, no impact
+  - 991449 # https://bugs.debian.org/991449 - not using bsd-mailx
+  - 994510 # https://bugs.debian.org/994510 - only affects i386 architecture
+  - 1000826 # https://bugs.debian.org/1000826 - only affects python 3.10
+  - 1003150 # https://bugs.debian.org/1003150 - distutils already installed
+  - 1000796 # https://bugs.debian.org/1000796 - no impact on common use cases
+  - 993716 # https://bugs.debian.org/993716 - IPv6 is disabled
+  - 945001 # https://bugs.debian.org/945001 - only affects hosts with multiple OS in grub
+  - 948318 # https://bugs.debian.org/948318 - old lbc6 versions are automatically removed
+  - 998516 # https://bugs.debian.org/998516 - only affects bridged interfaces, workaround in bug report
+  - 990026 # https://bugs.debian.org/990026 - MAILTO not used in cron jobs
+  - 1004111 # https://bugs.debian.org/1004111 - unconfirmed, unattended-upgrades failure will trigger an error report by mail
+  - 1003012 # https://bugs.debian.org/1003012 - fixed in point release
+  - 995387 # https://bugs.debian.org/994971 - only affects #994971/nvidia-driver not in use
+  - 992045 # https://bugs.debian.org/992045 - fixed in debian-security, local only, high RAM usage noticeable by monitoring
+  - 968368 # https://bugs.debian.org/968368 - option bond-master not in use
+  - 990428 # https://bugs.debian.org/990428 - option bond-slaves not in use
+  - 984574 # https://bugs.debian.org/984574 - fixed in point release, workaround in bug report
+  - 998008 # https://bugs.debian.org/998008 - NIS not in use
+  - 993578 # https://bugs.debian.org/993578 - fixed in point release, gpgconf --check-programs not used
+  - 990318 # https://bugs.debian.org/990318 - no impact, incomplete removal of python2
+  - 995115 # https://bugs.debian.org/995115 - unconfirmed, workaround is to comment out DPkg::Pre-Install-Pkgs in /etc/apt/apt.conf.d/10apt-listbugs
+  - 991936 # https://bugs.debian.org/991936 - fixed in point release, no workaround available
+  - 1016102 # https://bugs.debian.org/1016102 - edge case
+  - 1001276 # https://bugs.debian.org/1001276 - kFreeBSD only
+  - 975931 # https://bugs.debian.org/975931 - armhf only
+  - 1008005 # https://bugs.debian.org/1008005 - no impact when installation of recommended packages is disabled
+  - 1002047 # https://bugs.debian.org/1002047 - no impact when base option is present in configuration file
+  - 895823 # https://bugs.debian.org/895823 - only happens after purging dovecot
+  - 1009872 # https://bugs.debian.org/1009872 - only happens when /etc/ssl/certs/ssl-cert-snakeoil* were deleted manually
+  - 1019564 # https://bugs.debian.org/1019564 - unreproducible
+  - 1019855 # https://bugs.debian.org/1019855 - only affects 4th gen Intel Core CPUs
+  - 1023812 # https://bugs.debian.org/1019855 - packaging bug without impact
+  - 916596 # https://bugs.debian.org/916596 - not reproducible on a fresh debian installation
+  - 1028638 # https://bugs.debian.org/1028638 - unreproducible
+  - 1031336 # https://bugs.debian.org/1031336 - only affects debian sid
+  - 1029342 # https://bugs.debian.org/1029342 - packaging bug without impact
+  - 983393 # https://bugs.debian.org/983393 - ignored in bullseye, fixed in unstable
+  - 1035483 # https://bugs.debian.org/1035483 - minor bug leading to false positive/debsums incorrectly detecting missing file
+  - 993714 # https://bugs.debian.org/993714 - minor bug leading to false positive/debsums incorrectly detecting missing file
+  - 1037258 # https://bugs.debian.org/1037258 - unreproducible
+  - 1038422 # https://bugs.debian.org/1038422 - unreproducible
+  - 1033167 # https://bugs.debian.org/1033167 - packaging bug, no impact
+  - 1014503 # https://bugs.debian.org/1014503 - fixed, patch pending upload
+  - 1035820 # https://bugs.debian.org/1035820 - packaging bug, no impact
+  - 1036641 # https://bugs.debian.org/1036641 - packaging bug, no impact
+  - 1039668 # https://bugs.debian.org/1039668 - no impact unless chromium-browser is installed
+  - 1037478 # https://bugs.debian.org/1037478 - unreproducible
+  - 1038603 # https://bugs.debian.org/1038603 - unreproducible, specific to some GCC-based build processes
+  - 1030129 # https://bugs.debian.org/1030129 - unreproducible
+  - 1041547 # https://bugs.debian.org/1041547 - no impact unless madin deliberately sets an empty root password
+  - 1023748 # https://bugs.debian.org/1023748 - only affects java 20, debian 12 has java 17
+  - 1039472 # https://bugs.debian.org/1039472 - fixed, patch pending upload
+  - 1043415 # https://bugs.debian.org/1043415 - not applicable to upstream/packagecloud packages
+  - 1051003 # https://bugs.debian.org/1051003 - only affects pam_shield
+  - 1030284 # https://bugs.debian.org/1030284 - only affects arm64 architecture
+  - 1057715 # https://bugs.debian.org/1057715 - only affects i386 architecture

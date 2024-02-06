@@ -1,0 +1,8 @@
+- name: check that mandatory variables are correctly defined
+  assert:
+    quiet: yes
+    that: "{{ item }}"
+    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/common/cron"
+  loop:
+    - setup_cron == setup_cron | bool
+    - cron_log_level == cron_log_level|int

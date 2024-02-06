@@ -1,0 +1,47 @@
+##### SYSCTL/KERNEL CONFIGURATION #####
+# update sysctl settings (yes/no)
+setup_sysctl: yes
+# Enable/disable packet forwarding between network interfaces (routing) (yes/no)
+sysctl_allow_forwarding: no
+# answer ICMP pings (yes/no)
+sysctl_answer_ping: no
+# "swappiness" setting. 100: swap/reclaim RAM aggressively. 0: do not swap unless necessary
+sysctl_vm_swappiness: '10'
+# "VFS cache pressure" setting. 100+ : prefer caching memory pages over disk cache
+sysctl_vm_vfs_cache_pressure: '150'
+# yes/no: enable/disable creation of core dumps on kernel crashes
+# These are usually not needed and may contain sensitive information
+kernel_enable_core_dump: no
+# no/yes: configure /proc mountpoint to hide processes from other users
+# setting this to yes will likely break monitoring/process diagnostic tools (ps, htop, netdata...)
+kernel_proc_hidepid: no
+# list of kernel modules to prevent from being loaded
+kernel_modules_blacklist:
+  - dccp # CIS 3.4.1 Ensure DCCP is disabled
+  - sctp # CIS 3.4.2 Ensure SCTP is disabled
+  - rds # CIS 3.4.3 Ensure RDS is disabled
+  - tipc # 3.4.4 Ensure TIPC is disabled
+  - firewire-ohci # disable IEEE 1394 (FireWire) Support
+  - firewire-core # disable IEEE 1394 (FireWire) Support
+  - cpia2 # CPiA2 cameras
+  - floppy # floppy drives
+  - n_hdlc # HDLC line discipline
+  - pcspkr # PC speaker/beep
+  - thunderbolt # thunderbolt devices
+  - cramfs # CIS 1.1.1.5 mounting of squashfs filesystems is disabled
+  - freevxfs # CIS 1.1.1.1 mounting of freevxfs filesystems is disabled
+  - hfs # CIS 1.1.1.3 mounting of hfs filesystems is disabled
+  - hfsplus # CIS 1.1.1.4 mounting of hfsplus filesystems is disabled
+  - jffs2 # CIS 1.1.1.2 mounting of jffs2 filesystems is disabled
+  - udf # CIS 1.1.1.6 mounting of udf filesystems is disabled
+  # - soundcore # audio input/output
+  # - usb-midi # USB MIDI
+  # - usb-storage # CIS 1.1.10 disable USB storage - prevents usage of USB mass storage
+  # - bluetooth # bluetooth support, STIG V-38682
+  # - bnep # bluetooth support, STIG V-38682
+  # - btusb # bluetooth support, STIG V-38682
+  # - net-pf-31 # bluetooth support, STIG V-38682
+  # - uvcvideo # UVC video devices
+  # - v4l2_common # V4L2 video devices
+  # - vfat # 1.1.1.7 mounting of FAT filesystems is limited - prevents EFI boot
+  # - squashfs # CIS 1.1.1.5 mounting of squashfs filesystems is disabled

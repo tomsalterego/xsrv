@@ -1,0 +1,7 @@
+- name: include dns resolution configuration tasks
+  import_tasks: dns.yml
+  become: yes
+  tags:
+    - common
+    - dns
+  when: setup_dns | bool

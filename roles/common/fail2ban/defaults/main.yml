@@ -1,0 +1,14 @@
+### FAIL2BAN ###
+# setup fail2ban bruteforce detection/prevention system (yes/no)
+setup_fail2ban: yes
+# list of IPs to never ban - 127.0.0.1 is always whitelisted
+fail2ban_ignoreip:
+  - '10.0.0.0/8'
+  - '192.168.0.0/16'
+  - '172.16.0.0/12'
+# fail2ban default ban duration (in seconds or time abbreviation format)
+fail2ban_default_bantime: "1year"
+# fail2ban: default interval (in seconds or time abbreviation format) before counting failures towards a ban
+fail2ban_default_findtime: "10min"
+# fail2ban default number of failures that have to occur in the last findtime to ban the IP
+fail2ban_default_maxretry: 3

@@ -1,0 +1,7 @@
+- name: include Linux users configuration tasks
+  import_tasks: users.yml
+  become: yes
+  tags:
+    - common
+    - users
+  when: setup_users | bool

@@ -1,0 +1,7 @@
+- name: include kernel/sysctl configuration tasks
+  import_tasks: sysctl.yml
+  become: yes
+  tags:
+    - common
+    - sysctl
+  when: setup_sysctl | bool

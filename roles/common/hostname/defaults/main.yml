@@ -1,0 +1,3 @@
+##### HOSTNAME #####
+# yes/no: update hostname using ansible inventory name
+setup_hostname: yes

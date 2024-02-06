@@ -1,0 +1,64 @@
+##### FIREWALL #####
+# setup firewall (yes/no)
+setup_firewall: yes
+# log rejected/dropped packets (all/unicast/broadcast/multicast/off)
+firewalld_log_denied: all
+# Firewalld zones
+# Example:
+# firewalld_zone_sources:
+#   - zone: internal # add 192.168.0.0/16 and 10.0.0.0/8 to the internal zone
+#     sources: # list of IP addresses or networks (CIDR)
+#       - 192.168.0.0/16
+#       - 10.0.0.0/8
+#     state: enabled # optional, enabled/disabled, default enabled
+#     permanent: yes # optional, yes/no, default yes
+#     immediate: yes # optional, yes/no, default yes
+#   - zone: internal # remove 172.16.0.0/12 from the internal zone
+#     sources:
+#       - 172.16.0.0/12
+#     state: disabled
+#   - zone: drop # drop all traffic coming from these addresses
+#     sources:
+#       - 10.11.12.13/24
+#       - 15.8.4.6
+#   - zone: ldap-clients # custom zone, incoming traffic from specific hosts
+#     sources:
+#       - 192.168.1.2
+#       - 192.168.1.3
+#   - zone: delete-this-zone
+#     delete: yes # set delete: yes to completely delete the zone
+firewalld_zone_sources:
+  - zone: internal # add all RFC1918 addresses to the internal zone
+    sources:
+      - 192.168.0.0/16
+      - 172.16.0.0/12
+      - 10.0.0.0/8
+# Services to allow in firewalld zones
+# Example:
+# firewalld_zone_services:
+#   - zone: public # firewall zone to configure
+#     services: # list of services to add/remove from the zone
+#       - ssh
+#     state: disabled # optional, enabled/disabled, default enabled, set to disabled to remove a rule
+#     permanent: yes # optional, yes/no, default yes
+#     immediate: yes # optional, yes/no, default yes
+#   - zone: internal
+#     services:
+#       - dns # allow DNS from the internal zone
+#   - zone: ldap-clients # allow traffic for a specific service from a zone
+#     services:
+#       - ldap
+#       - ldaps
+firewalld_zone_services:
+  - zone: public
+    services:
+      - ssh # allow SSH from anywhere
+  - zone: internal
+    services:
+      - ssh # allow SSH from internal zone
+  - zone: public
+    services:
+      - dhcpv6-client # remove dhcpv6-client rule from the default public zone
+    state: disabled
+# additional firewalld configuration - https://docs.ansible.com/ansible/latest/collections/ansible/posix/firewalld_module.html
+firewalld: []

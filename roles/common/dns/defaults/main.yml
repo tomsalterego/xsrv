@@ -1,0 +1,9 @@
+##### DNS RESOLVER #####
+# update DNS nameserver settings (resolv.conf) (yes/no)
+setup_dns: no
+# list of DNS nameservers IP addresses
+# Example:
+# dns_nameservers:
+#   - "1.1.1.1"
+#   - "1.0.0.1"
+dns_nameservers: []

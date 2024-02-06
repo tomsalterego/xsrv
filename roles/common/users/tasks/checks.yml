@@ -1,0 +1,13 @@
+- name: check that mandatory variables are correctly defined
+  assert:
+    quiet: yes
+    that: "{{ item }}"
+    fail_msg: "One or more variables are not correctly defined. Check role documentation: https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/common/users"
+  loop:
+    - ansible_user_allow_sudo_rsync_nopasswd == ansible_user_allow_sudo_rsync_nopasswd | bool
+    - setup_users == setup_users | bool
+    - linux_users|type_debug == "list"
+    - systemd_logind_kill_user_processes == systemd_logind_kill_user_processes|bool
+    - systemd_logind_kill_exclude_users|type_debug == "list"
+    - systemd_logind_lock_after_idle_min == systemd_logind_lock_after_idle_min|int
+    - bash_timeout == bash_timeout | int
