@@ -18,7 +18,7 @@ ListenPort = 51820
 {% for peer in wireguard_peers %}
 echo "[Peer]
 # Peer: {{ peer.name }}
-PublicKey = {{ peer.public_key | default('$('cat /etc/wireguard/peers/' + peer.name + '.pub')') }}
+PublicKey = {{ peer.public_key | default('$(cat /etc/wireguard/peers/' + peer.name + '.pub')') }}
 AllowedIPs = {{ peer.ip_address }}
 
 " >> /etc/wireguard/wg0.conf.tmp

@@ -79,7 +79,7 @@
   command:
     cmd: /usr/local/bin/wireguard-update-config
   register: wireguard_config
-  changed_when: "wg0.conf changed" in wireguard_config.stdout
+  changed_when: '"wg0.conf changed" in wireguard_config.stdout'
   ignore_errors: "{{ ansible_check_mode }}"
   notify: reload wireguard configuration
 
