@@ -18,7 +18,7 @@ See [meta/main.yml](meta/main.yml)
   roles:
     - nodiscc.xsrv.common # (optional) basic setup, hardening, firewall
     - nodiscc.xsrv.monitoring_netdata
-    # - nodiscc.xsrv.monitoring # (optional) full monitoring suite including monitoring_netdata
+    # - nodiscc.xsrv.monitoring # (alternatively) full monitoring suite including monitoring_netdata
 ```
 
 See [defaults/main.yml](defaults/main.yml) for all configuration variables
